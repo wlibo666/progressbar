@@ -928,12 +928,14 @@ func clearProgressBar(c config, s state) error {
 	}
 	if c.useANSICodes {
 		// write the "clear current line" ANSI escape sequence
+		fmt.Println("-----ansi----")
 		return writeString(c, "\033[2K\r")
 	}
 	// fill the empty content
 	// to overwrite the progress bar and jump
 	// back to the beginning of the line
 	str := fmt.Sprintf("\r%s\r", strings.Repeat(" ", s.maxLineWidth))
+	fmt.Println("-----default----")
 	return writeString(c, str)
 	// the following does not show correctly if the previous line is longer than subsequent line
 	// return writeString(c, "\r")
