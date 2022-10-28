@@ -934,7 +934,7 @@ func clearProgressBar(c config, s state) error {
 	// fill the empty content
 	// to overwrite the progress bar and jump
 	// back to the beginning of the line
-	str := fmt.Sprintf("\b\r%s\r", strings.Repeat(" ", s.maxLineWidth))
+	str := fmt.Sprintf("\r\b\r%s\r", strings.Repeat(" ", s.maxLineWidth))
 	fmt.Println("-----default----")
 	return writeString(c, str)
 	// the following does not show correctly if the previous line is longer than subsequent line
