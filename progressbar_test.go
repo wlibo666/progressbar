@@ -654,3 +654,11 @@ func TestRenderBlankStateWithThrottle(t *testing.T) {
 		t.Errorf("Render miss-match\nResult: '%s'\nExpect: '%s'\n%+v", result, expect, bar)
 	}
 }
+
+func TestProgressBar_RenderBlank(t *testing.T) {
+	bar := Default(50)
+	for i := 0; i < 50; i++ {
+		bar.Add(1)
+		time.Sleep(40 * time.Millisecond)
+	}
+}

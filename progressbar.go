@@ -17,6 +17,13 @@ import (
 	"golang.org/x/term"
 )
 
+var (
+	// DefaultClearLineFormat 默认清除当前行
+	DefaultClearLineFormat = "\r\b\r\b\r\b\r\b\r%s\r"
+	// ANSIClearLineFormat ANSI格式编码清除当前行
+	ANSIClearLineFormat = "\033[2K\r"
+)
+
 // ProgressBar is a thread-safe, simple
 // progress bar
 type ProgressBar struct {
@@ -928,14 +935,13 @@ func clearProgressBar(c config, s state) error {
 	}
 	if c.useANSICodes {
 		// write the "clear current line" ANSI escape sequence
-		fmt.Println("-----ansi----")
-		return writeString(c, "\033[2K\r")
+		return writeString(c, ANSIClearLineFormat)
 	}
 	// fill the empty content
 	// to overwrite the progress bar and jump
 	// back to the beginning of the line
-	str := fmt.Sprintf("\r\b\r%s\r", strings.Repeat(" ", s.maxLineWidth))
-	fmt.Println("-----default----")
+	str := fmt.Sprintf(DefaultClearLineFormat, strings.Repeat(" ", s.maxLineWidth))
+
 	return writeString(c, str)
 	// the following does not show correctly if the previous line is longer than subsequent line
 	// return writeString(c, "\r")
